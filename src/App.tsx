@@ -105,7 +105,7 @@ export default function App() {
             id="vsl-subheadline"
             className="text-[15px] sm:text-lg md:text-xl text-neutral-700 font-normal leading-[1.55] sm:leading-relaxed text-balance"
           >
-            A Será Cacau conecta empórios, cafeterias, hotéis e restaurantes a um cacau 100% brasileiro, de origem rastreável na Costa do Cacau, com produtos pensados para revenda, bebidas, receitas e novas experiências de consumo.
+           A Será Cacau conecta negócios a um cacau 100% brasileiro, de origem rastreável na Costa do Cacau, para revenda, bebidas, receitas e novas experiências.
           </p>
         </section>
 
