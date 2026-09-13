@@ -66,10 +66,12 @@ export default function App() {
         <section className="w-full text-center max-w-4xl mx-auto mb-4 sm:mb-8">
           <h1
             id="vsl-headline"
-            className="text-[21px] sm:text-3xl md:text-4xl lg:text-[40px] font-black text-neutral-950 tracking-tight leading-[1.32] sm:leading-[1.25] uppercase text-balance"
+            className="text-[17px] xs:text-[19px] sm:text-2xl md:text-3xl lg:text-[38px] font-black text-neutral-950 tracking-tight leading-[1.32] sm:leading-[1.24] uppercase text-center"
           >
-            SE SUA OPERAÇÃO JÁ FATURA{' '}
-            <span className="relative inline-block mx-1 px-2 sm:px-3 py-0.5 text-black font-black z-0 whitespace-nowrap">
+            <span className="block sm:inline">
+              SE SUA OPERAÇÃO JÁ FATURA
+            </span>{' '}
+            <span className="relative inline-block my-0.5 sm:my-0 mx-0.5 sm:mx-1 px-2.5 sm:px-3 py-0.5 text-black font-black z-0 whitespace-nowrap">
               <span className="relative z-10 text-black font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.4)]">
                 MAIS DE R$ 50 MIL/MÊS
               </span>
@@ -78,7 +80,7 @@ export default function App() {
                 aria-hidden="true"
                 viewBox="0 0 360 52"
                 preserveAspectRatio="none"
-                className="absolute -inset-x-2 -inset-y-1 w-[calc(100%+16px)] h-[calc(100%+8px)] -z-10 pointer-events-none -rotate-[0.5deg]"
+                className="absolute -inset-x-2 -inset-y-0.5 w-[calc(100%+16px)] h-[calc(100%+7px)] -z-10 pointer-events-none -rotate-[0.5deg]"
               >
                 <path
                   d="M 5,26 C 2,23 2,19 6,17 C 22,12 65,8 135,8 C 215,8 295,11 345,15 C 356,16 359,20 357,25 C 353,33 330,41 275,46 C 205,50 120,51 55,47 C 22,45 8,41 4,37 C 1,34 1,30 4,28 Z"
@@ -91,11 +93,19 @@ export default function App() {
                 />
               </svg>
             </span>
-            , CONHEÇA UMA NOVA FORMA DE TRANSFORMAR CACAU 100% EM{' '}
-            <span className="text-amber-900 underline decoration-amber-500 decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-6 inline-block font-black">
-              EXPERIÊNCIA, DIFERENCIAÇÃO E MARGEM
+            <span className="font-black text-neutral-950">,</span>{' '}
+            <span className="block sm:inline mt-0.5 sm:mt-0">
+              CONHEÇA UMA NOVA FORMA DE TRANSFORMAR
+            </span>{' '}
+            <span className="block sm:inline">
+              CACAU 100% EM{' '}
+              <span className="text-amber-900 underline decoration-amber-500 decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-6 font-black inline">
+                EXPERIÊNCIA,
+              </span>
+            </span>{' '}
+            <span className="block sm:inline text-amber-900 underline decoration-amber-500 decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-6 font-black whitespace-nowrap">
+              DIFERENCIAÇÃO E MARGEM
             </span>
-            
           </h1>
         </section>
 
