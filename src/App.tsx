@@ -69,7 +69,7 @@ export default function App() {
             className="text-[21px] sm:text-3xl md:text-4xl lg:text-[40px] font-black text-neutral-950 tracking-tight leading-[1.32] sm:leading-[1.25] uppercase text-balance"
           >
             SE SUA OPERAÇÃO JÁ FATURA{' '}
-            <span className="relative inline-block mx-1 px-2 sm:px-3 py-0.5 text-black font-black z-0 whitespace-nowrap">
+            <span className="relative inline-block ml-1 mr-0.5 px-2 sm:px-3 py-0.5 text-black font-black z-0 whitespace-nowrap">
               <span className="relative z-10 text-black font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.4)]">
                 MAIS DE R$ 50 MIL/MÊS
               </span>
@@ -90,10 +90,10 @@ export default function App() {
                   opacity="0.8"
                 />
               </svg>
-            </span>
-            , CONHEÇA UMA NOVA FORMA DE TRANSFORMAR CACAU 100% EM{' '}
-            <span className="text-amber-900 underline decoration-amber-500 decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-6 inline-block font-black">
-              EXPERIÊNCIA, DIFERENCIAÇÃO E MARGEM
+            </span>, CONHEÇA UMA NOVA FORMA DE TRANSFORMAR CACAU 100% EM{' '}
+            <span className="text-amber-900 underline decoration-amber-500 decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-6 font-black inline">
+              EXPERIÊNCIA,{' '}
+              <span className="whitespace-nowrap">DIFERENCIAÇÃO E MARGEM</span>
             </span>
             
           </h1>
