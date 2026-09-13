@@ -6,6 +6,7 @@ import {
   VolumeX,
   Maximize,
   Minimize,
+  RotateCcw,
 } from 'lucide-react';
 
 interface VideoPlayerProps {
@@ -26,6 +27,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const isResettingToStartRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isEnded, setIsEnded] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
@@ -136,11 +138,40 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       });
   };
 
+  const handleRestart = () => {
+    if (!videoRef.current) return;
+    isResettingToStartRef.current = true;
+    videoRef.current.currentTime = 0;
+    setCurrentTime(0);
+    setIsEnded(false);
+    videoRef.current.muted = false;
+    videoRef.current
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+        setShowControls(true);
+        setTimeout(() => {
+          isResettingToStartRef.current = false;
+        }, 500);
+      })
+      .catch((err) => {
+        console.error('Error restarting video:', err);
+        setTimeout(() => {
+          isResettingToStartRef.current = false;
+        }, 500);
+      });
+  };
+
   const togglePlay = () => {
     if (!videoRef.current) return;
 
     if (!isAudioActivated) {
       handleActivateAudio();
+      return;
+    }
+
+    if (isEnded) {
+      handleRestart();
       return;
     }
 
@@ -239,8 +270,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       onClick={() => {
         if (!isAudioActivated) {
           handleActivateAudio();
+        } else if (isEnded) {
+          handleRestart();
         } else {
-          setShowControls(prev => !prev);
+          togglePlay();
         }
       }}
     >
@@ -276,8 +309,14 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             onTimeUpdate={handleTimeUpdate}
             onSeeking={handleSeeking}
             onLoadedMetadata={handleLoadedMetadata}
-            onEnded={() => setIsPlaying(false)}
-            onPlay={() => setIsPlaying(true)}
+            onEnded={() => {
+              setIsPlaying(false);
+              setIsEnded(true);
+            }}
+            onPlay={() => {
+              setIsPlaying(true);
+              setIsEnded(false);
+            }}
             onPause={() => setIsPlaying(false)}
           />
 
@@ -335,8 +374,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             </div>
           )}
 
-          {/* Center Play Button Overlay (when paused after audio was already activated) */}
-          {isAudioActivated && !isPlaying && (
+          {/* Center Play Button Overlay (when paused after audio was already activated and not ended) */}
+          {isAudioActivated && !isPlaying && !isEnded && (
             <div
               id="vsl-paused-overlay"
               onClick={(e) => {
@@ -351,12 +390,55 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             </div>
           )}
 
+          {/* Video Finished Screen Overlay with Restart Button */}
+          {isEnded && (
+            <div
+              id="vsl-ended-overlay"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleRestart();
+              }}
+              className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[3px] flex flex-col items-center justify-center p-6 z-30 cursor-pointer animate-fade-in-scale"
+            >
+              <div className="flex flex-col items-center gap-4 text-center max-w-[280px]">
+                <button
+                  type="button"
+                  id="btn-restart-video-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRestart();
+                  }}
+                  className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-amber-600 to-amber-800 hover:from-amber-500 hover:to-amber-700 active:scale-95 text-white flex items-center justify-center shadow-2xl transition-all duration-200 border-2 border-amber-400/60 group"
+                  aria-label="Reiniciar vídeo"
+                >
+                  <RotateCcw className="w-8 h-8 sm:w-9 sm:h-9 group-hover:-rotate-45 transition-transform duration-300" />
+                </button>
+                <div className="space-y-2">
+                  <span className="block text-base sm:text-lg font-black tracking-wide text-white uppercase">
+                    Apresentação Concluída
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRestart();
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-xs sm:text-sm text-white font-bold tracking-wide transition-all border border-white/25 shadow-sm"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    Reiniciar vídeo
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Bottom Player Controls (visible when audio is active & controls shown) */}
           <div
             id="vsl-controls-bar"
             onClick={e => e.stopPropagation()}
             className={`absolute bottom-0 left-0 right-0 p-2.5 sm:p-4 bg-gradient-to-t from-neutral-950/95 via-neutral-950/70 to-transparent transition-opacity duration-300 z-20 ${
-              isAudioActivated && (showControls || !isPlaying)
+              isAudioActivated && (showControls || !isPlaying || isEnded)
                 ? 'opacity-100'
                 : 'opacity-0 pointer-events-none'
             }`}
@@ -386,9 +468,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                   id="btn-play-pause"
                   onClick={togglePlay}
                   className="p-2 rounded-lg hover:bg-neutral-800/80 active:bg-neutral-700 text-white transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
-                  aria-label={isPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo'}
+                  aria-label={isEnded ? 'Reiniciar vídeo' : isPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo'}
                 >
-                  {isPlaying ? (
+                  {isEnded ? (
+                    <RotateCcw className="w-4 h-4 sm:w-6 sm:h-6" />
+                  ) : isPlaying ? (
                     <Pause className="w-4 h-4 sm:w-6 sm:h-6 fill-current" />
                   ) : (
                     <Play className="w-4 h-4 sm:w-6 sm:h-6 fill-current" />
