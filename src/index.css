@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulseAttention {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px -5px rgba(21, 128, 61, 0.35), 0 8px 10px -6px rgba(21, 128, 61, 0.25);
+  }
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 20px 30px -5px rgba(21, 128, 61, 0.5), 0 10px 15px -5px rgba(21, 128, 61, 0.35);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pulse-attention {
+  animation: pulseAttention 2.2s ease-in-out infinite;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Será Cacau - VSL B2B",
+  "description": "Página white de VSL para apresentação da parceria B2B da Será Cacau com empórios, cafeterias, hotéis e restaurantes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
